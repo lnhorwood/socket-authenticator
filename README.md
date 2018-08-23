@@ -23,7 +23,7 @@ to be passed to
 Once this is done, the server will delegate the handling of authentication events to your authenticator. It's also
 important to note that in order for 
 [MongoSocketAuthenticator](https://github.com/lnhorwood/socket-authenticator/blob/master/src/mongo/mongo-socket-authenticator.ts)
-to work, the host machine must have MongoDB running and the application must have an active connection.
+to work, the application must have an active connection to MongoDB.
 ```js
 import { SocketServer } from '@horwood/socket-server';
 import { MongoSocketAuthenticator } from '@horwood/socket-authenticator';
