@@ -27,6 +27,7 @@
   "dependencies": {
     "@horwood/socket-server": "^1.0.5",
     "bcrypt": "^3.0.0",
+    "hat": "0.0.3",
     "jsonwebtoken": "^8.3.0",
     "mongoose": "5.2.8",
     "rxjs": "^6.2.2"
