@@ -25,7 +25,7 @@
     "prettier": "^1.14.2"
   },
   "dependencies": {
-    "@horwood/socket-server": "^1.0.6",
+    "@horwood/socket-server": "^1.0.8",
     "bcrypt": "^3.0.0",
     "hat": "0.0.3",
     "jsonwebtoken": "^8.3.0",
