@@ -1,6 +1,6 @@
-import { sign, verify, VerifyCallback } from 'jsonwebtoken';
-import { bindNodeCallback, Observable, throwError } from 'rxjs';
-import { catchError, map } from 'rxjs/operators';
+import { sign, verify } from 'jsonwebtoken';
+import { Observable, of } from "rxjs";
+import { map, tap } from "rxjs/operators";
 import hat from 'hat';
 import { User } from '../schema/user';
 import { TimeInSeconds } from './time-in-seconds';
@@ -24,12 +24,27 @@ export class Session {
     return sign(this.toJSON(), Session._secret);
   }
 
+  get user(): User {
+    return this._user;
+  }
+
+  static restore(token: string): Session {
+    try {
+      const session: object | string = verify(token, Session._secret);
+      return new Session((<{user: User}> session).user);
+    } catch {
+      return null;
+    }
+  }
+
   static validate(token: string): Observable<string> {
-    return bindNodeCallback((token: string, secret: string, callback: VerifyCallback) =>
-      verify(token, secret, callback)
-    )(token, Session._secret).pipe(
-      catchError(() => throwError('Invalid Token.')),
-      map((session: { user: User }) => new Session(session.user).token)
+    return of(Session.restore(token)).pipe(
+      tap(session => {
+        if (!session) {
+          throw 'Invalid Token.';
+        }
+      }),
+      map(session => session.token)
     );
   }
 
